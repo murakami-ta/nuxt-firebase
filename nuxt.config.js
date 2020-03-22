@@ -1,3 +1,4 @@
+require('dotenv').config()
 
 export default {
   mode: 'universal',
@@ -28,6 +29,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    "@/plugins/firebase"
   ],
   /*
   ** Nuxt.js dev-modules
@@ -41,6 +43,7 @@ export default {
   modules: [
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
     '@nuxtjs/bulma',
+    '@nuxtjs/dotenv',
   ],
   /*
   ** Build configuration
@@ -58,5 +61,14 @@ export default {
     */
     extend (config, ctx) {
     }
+  },
+  env: {
+    API_KEY: process.env.API_KEY,
+    AUTH_DOMAIN: process.env.AUTH_DOMAIN,
+    DATABASE_URL: process.env.DATABASE_URL,
+    PROJECT_ID: process.env.PROJECT_ID,
+    STORAGE_BUCKET: process.env.STORAGE_BUCKET,
+    MESSAGING_SENDER_ID: process.env.MESSAGING_SENDER_ID,
+    APP_ID: process.env.APP_ID
   }
 }
