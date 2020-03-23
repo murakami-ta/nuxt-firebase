@@ -13,15 +13,15 @@
                 <input
                   class="input is-rounded"
                   type="text"
-                  name="displayName"
-                  v-model="displayName"
+                  name="name"
+                  v-model="name"
                   v-validate="'required|min:4'"
-                  :class="{ 'is-danger': errors.has('displayName') }"
+                  :class="{ 'is-danger': errors.has('name') }"
                 />
                 <p
-                  v-show="errors.has('displayName')"
+                  v-show="errors.has('name')"
                   class="help is-danger"
-                >{{ errors.first('displayName') }}</p>
+                >{{ errors.first('name') }}</p>
               </div>
             </div>
             <div class="field">
@@ -71,3 +71,35 @@
     </section>
   </div>
 </template>
+
+<script>
+import form from "@/mixins/form";
+export default {
+  data() {
+    return {
+      name: "",
+      email: "",
+      password: ""
+    };
+  },
+  mixins: [form],
+  methods: {
+    onSignUp() {
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          const signUpData = {
+            name: this.name,
+            email: this.email,
+            password: this.password
+          };
+          this.$store.dispatch("signUpUser", signUpData);
+        }
+      });
+    },
+    jobsDone() {
+      this.removeErrors();
+      this.$router.replace("/");
+    }
+  }
+};
+</script>
