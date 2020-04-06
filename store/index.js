@@ -57,6 +57,31 @@ export const actions = {
         commit("setIsLoading", false);
         commit("setError", error);
       });
+  },
+
+  loginUser({ commit }, payload) {
+    commit("setIsLoading", true);
+    commit("clearError");
+
+    this.$fireApp
+      .auth()
+      .signInWithEmailAndPassword(payload.email, payload.password)
+      .then(data => {
+        const authUser = {
+          id: data.user.uid,
+          email: data.user.email,
+          name: data.user.displayName
+        };
+        commit("setUser", authUser);
+        commit("setJobDone", true)
+        commit("setIsLoading", false);
+      })
+      .catch(error => {
+        commit("setBusy", false);
+        commit("setError", error);
+      })
+
+
   }
 };
 
